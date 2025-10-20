@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <!--Import Three.js CDN-->
-<script src="??????????????????????"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.180.0/three.tsl.js"></script>
 
 <head>
     <meta charset="UTF-8">
@@ -19,13 +19,17 @@
         // Create a camera with specified properties.
         var camera = new THREE.PerspectiveCamera(76, window.innerWidth / window.innerHeight, 0.1, 1000);
         // Set camera position
-
+        camera.position.z = 5;
+        const width = window.innerWidth;
+        const height = window.innerHeight;
+        const camera = new THREE.PerspectiveCamera(80, width / height, 0.1, 1000);
         // Implement renderer - Create a WebGL renderer for rendering the scene.
         var renderer = new THREE.WebGLRenderer();
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
         
     </script>
+    <h1>Kostiantyn Panasenko</h1>
 </body>
 
 </html>
