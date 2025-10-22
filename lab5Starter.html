@@ -33,6 +33,10 @@
     function repeatMe() {
       sphere.rotation.x += 0.01;
       sphere.rotation.y += 0.01;
+      sphere.position.x += 0.1;
+      if (sphere.position.x > 30) {
+        sphere.position.x = -30;
+      }
       renderer.render(scene, camera);
       requestAnimationFrame(repeatMe);
     }
