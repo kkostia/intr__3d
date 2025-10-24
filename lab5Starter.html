@@ -14,31 +14,46 @@
     const width = window.innerWidth;
     const height = window.innerHeight;
     const camera = new THREE.PerspectiveCamera(80, width / height, 0.1, 1000);
-    camera.position.z = 30;
+    camera.position.set(0, 30, 60);
+    camera.lookAt(0, 0, 0);
 
     var renderer = new THREE.WebGLRenderer();
     renderer.setSize(width, height);
+    renderer.shadowMap.enabled = true;
     document.body.appendChild(renderer.domElement);
 
-    var spotLight = new THREE.SpotLight(0xffffff);
-    spotLight.position.set(50, 50, 50);
-    scene.add(spotLight);
+    var light = new THREE.SpotLight(0xffffff);
+    light.position.set(50, 80, 60);
+    light.castShadow = true;
+    scene.add(light);
+
+    const plane = new THREE.Mesh(
+      new THREE.PlaneGeometry(300, 300),
+      new THREE.MeshLambertMaterial({ color: 0x808080 })
+    );
+    plane.rotation.x = -Math.PI / 2;
+    plane.position.y = -20;
+    plane.receiveShadow = true;
+    scene.add(plane);
 
     const mySphere = {
       mesh: new THREE.Mesh(
         new THREE.SphereGeometry(15, 32, 16),
         new THREE.MeshLambertMaterial({ color: 0xffff00 })
       ),
+      vy: 0,
       update() {
-        this.mesh.rotation.x += 0.01;
-        this.mesh.rotation.y += 0.01;
-        this.mesh.position.x += 0.1;
-        if (this.mesh.position.x > 30) {
-          this.mesh.position.x = -30;
+        this.vy -= 0.4; // gravity
+        this.mesh.position.y += this.vy;
+        if (this.mesh.position.y < -5) { // simple bounce
+          this.mesh.position.y = -5;
+          this.vy *= -0.7;
         }
       }
     };
 
+    mySphere.mesh.position.set(0, 40, 0);
+    mySphere.mesh.castShadow = true;
     scene.add(mySphere.mesh);
 
     function repeatMe() {
